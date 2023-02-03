@@ -10,15 +10,16 @@
         <ui:composition template="./../../WEB-INF/templates/html.xhtml">
 
             <ui:define name="content">
-                <h5>Gris 1</h5>
-                <h:form id="grascaleForm">
+                <h5>Gris Azul</h5>
+                <h:form id="grayScaleBlue">
                     <h:commandLink class="btn btn-primary btn-sm mt-3"
-                                   value="Aplicar filtro" action="#{gs1.aplicar()}" >
-                        <f:ajax execute="grayscaleForm" render="image" />
+                                   value="Aplicar filtro"
+                                   action="#{gsblue.aplicar()}">
+                        <f:ajax execute="grayscaleForm" render="image"/>
                     </h:commandLink>
-                    <h:commandLink class="btn btn-warning btn-sm mt-3" 
-                                   value="Hacer permanente" action="#{editor.apply()}" >
-                        <f:ajax execute="grayscaleForm" render="image" />
+                    <h:commandLink class="btn btn-warning btn-sm mt-3"
+                                   value="Hacer permanente" action="#{editor.apply()}">
+                        <f:ajax execute="grayscaleForm" render="image"/>
                     </h:commandLink>
                 </h:form>
             </ui:define>
@@ -27,3 +28,4 @@
 
     </body>
 </html>
+

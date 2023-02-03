@@ -19,6 +19,7 @@
     <h:body class="bg-light" >
 
         <ui:include src="nav.xhtml" />
+        
         <div id="content" class="container">
             <div class="row my-5">
                 <h:panelGroup id="sidebar" class="col-md-4" layout="block">
@@ -31,22 +32,8 @@
                             <c:choose>
                                 <c:when test="#{empty editor.foto}">
                                     <p>¡Comienza subiendo una imagen!</p>
-                                    <h:form id="upload" enctype="multipart/form-data"  >
-                                        <h:messages id="mensaje" />
-                                        <div class="custom-file text-truncate mb-3">
-                                            <h:inputFile value="#{editor.file}" class="custom-file-input" id="foto"
-                                                         required="true"
-                                                         requiredMessage="Es menester seleccionar una imagen" > 
-                                                <f:passThroughAttribute name="accept" value=".png, .jpg, .jpeg" />
-                                            </h:inputFile>
-                                            <label class="custom-file-label" for="customFileLang">Selecciona una imagen</label>
-                                        </div>
-                                        <h:commandLink class="btn btn-primary"
-                                                       action="#{editor.uploadImage()}">
-                                            Cargar imagen al canvas
-                                            <f:ajax execute="upload" render="sidebar image" />
-                                        </h:commandLink>
-                                    </h:form>
+                                    
+                                    <ui:include src="uploadForm.xhtml" />
                                 </c:when>
                                 <c:otherwise>
                                     <ui:insert name="content"/>
@@ -74,8 +61,7 @@
                 <div class="col-md-8 border border-info rounded-sm" >
                     <h:graphicImage id="image"
                                     value="#{not empty editor.foto ? editor.foto : '/faces/resources/img/unsplash.jpg'}" 
-                                    class="d-block mx-auto border border-light  img-fluid" 
-                                    style="background-image: url('#{request.contextPath}/faces/resources/img/pattern.jpg')" />
+                                    class="d-block mx-auto border border-light  img-fluid"  />
                 </div>
             </div>
 

@@ -41,7 +41,8 @@ public class GrayScale1Controller implements Serializable {
     
     public BufferedImage grayScale1(BufferedImage img){
         // saca la medida ancho y alto del buffer que recibe
-        int w = img.getWidth(); int h = img.getHeight();
+        int w = img.getWidth(); 
+        int h = img.getHeight();
         // crea un buffer local para no alterar el buffer que recibe
         BufferedImage bi = new BufferedImage(w,h,BufferedImage.TYPE_INT_RGB);
         // recorre los pixeles del buffer 

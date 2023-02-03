@@ -22,12 +22,12 @@ import org.apache.commons.io.FilenameUtils;
  *
  * @author chars
  */
-@ManagedBean(name="editor")
+@ManagedBean(name = "editor")
 @SessionScoped
 public class Editor implements Serializable {
 
     private static final long serialVersionUID = 1L;
-  
+
     private String foto;
     private Part file;
     private BufferedImage img;
@@ -39,14 +39,16 @@ public class Editor implements Serializable {
      * Creates a new instance of FiltrosControlador
      */
     public Editor() {
-        
+
     }
-    
+
     public String getFoto() {
         return foto;
     }
 
-    public void setFoto (String foto) { this.foto = foto; }
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
 
     public Part getFile() {
         return file;
@@ -60,63 +62,67 @@ public class Editor implements Serializable {
         return img2;
     }
 
-    public String getFilename () { return filename; }
+    public String getFilename() {
+        return filename;
+    }
 
-    public String getExt () { return ext; }
+    private String getFileName(Part part) {
+        String fileName = "";
+        for (String cd : part.getHeader("content-disposition").split(";")) {
+            if (cd.trim().startsWith("filename")) {
+                fileName = cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "");
+            }
+        }
+        return fileName.substring(fileName.lastIndexOf('/') + 1).substring(fileName.lastIndexOf('\\') + 1); // MSIE fix. } } return null; }
+    }
+
+    public String getExt() {
+        return ext;
+    }
 
     public void setImg(BufferedImage img) {
         this.img = img;
         generateB64();
     }
-    
+
     public void uploadImage() throws IOException {
         FacesContext current = FacesContext.getCurrentInstance();
         try {
             InputStream input = file.getInputStream();
             img2 = img = ImageIO.read(input);
-            filename  = getFileName(file);
+            filename = getFileName(file);
             ext = FilenameUtils.getExtension(filename);
             generateB64();
             file = null;
             input = null;
         } catch (Exception ex) {
-            current.addMessage(null, 
-                new FacesMessage(
-                    FacesMessage.SEVERITY_ERROR,
-                    "¡Algo salio mal!",
-                    ex.getMessage()
-                )
+            current.addMessage(null,
+                    new FacesMessage(
+                            FacesMessage.SEVERITY_ERROR,
+                            "¡Algo salio mal!",
+                            ex.getMessage()
+                    )
             );
         }
     }
-    
+
     public void apply() {
         img2 = img;
     }
-    
+
     public void reset() {
         img = img2;
         generateB64();
     }
-    
+
     public void delete() throws IOException {
         img = img2 = null;
         foto = null;
         FacesContext.getCurrentInstance().getExternalContext().redirect("/Filtros/");
     }
-    
+
     public void generateB64() {
-        foto  = ImageToBase64.codificar(img,ext);
+        foto = ImageToBase64.codificar(img, ext);
     }
-    
-    private String getFileName(Part part) {
-        String fileName = "";
-        for (String cd : part.getHeader("content-disposition").split(";")) { 
-            if (cd.trim().startsWith("filename")) { 
-                fileName = cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "");
-            }
-        }
-        return fileName.substring(fileName.lastIndexOf('/') + 1).substring(fileName.lastIndexOf('\\') + 1); // MSIE fix. } } return null; }
-    } 
-     
+
 }

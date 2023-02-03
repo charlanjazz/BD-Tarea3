@@ -10,12 +10,16 @@
     <h:body>
         <h:form id="upload" enctype="multipart/form-data">
             <h:messages id="mensaje" />
-            <h:inputFile value="#{editor.file}" class="custom-file-input" id="foto"
-                         required="true"
-                         requiredMessage="No has seleccionado ninguna Imagen" > 
-                <f:passThroughAttribute name="accept" value=".png, .jpg, .jpeg" />
-            </h:inputFile>
-            <h:commandLink value="Subir imagen" action="#{editor.uploadImage()}">
+            <div class="custom-file text-truncate mb-3">
+                <h:inputFile value="#{editor.file}" class="custom-file-input" id="foto"
+                             required="true"
+                             requiredMessage="Es menester seleccionar una imagen" > 
+                    <f:passThroughAttribute name="accept" value=".png, .jpg, .jpeg" />
+                </h:inputFile>
+                <label class="custom-file-label" for="customFileLang">Selecciona una imagen</label>
+            </div>
+            <h:commandLink class="btn btn-primary" action="#{editor.uploadImage()}">
+                Cargar imagen
                 <f:ajax execute="upload" render="upload mensaje image" />
             </h:commandLink>
         </h:form>

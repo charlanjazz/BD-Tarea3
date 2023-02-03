@@ -20,5 +20,4 @@ public class ImageToBufferedImage {
         BufferedImage b = ImageIO.read(file.getInputStream());
         return b;
     }
-
 }
